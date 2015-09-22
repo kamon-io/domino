@@ -23,6 +23,7 @@ import scalariform.formatter.preferences._
 object Settings {
 
   lazy val basicSettings: Seq[Setting[_]] = Seq(
+    ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
     resolvers ++= Dependencies.resolutionRepos,
     version <<= version in ThisBuild,
     scalacOptions  := Seq(

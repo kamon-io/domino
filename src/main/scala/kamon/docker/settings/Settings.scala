@@ -1,5 +1,4 @@
-/*
- * =========================================================================================
+/* =========================================================================================
  * Copyright © 2013-2015 the kamon project <http://kamon.io/>
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
@@ -14,15 +13,25 @@
  * =========================================================================================
  */
 
+package kamon.docker.settings
 
-package kamon.docker
+import java.util.Map.Entry
+import com.typesafe.config.{ ConfigFactory, ConfigObject, ConfigValue }
+import scala.collection.JavaConverters._
 
-import com.typesafe.config.ConfigFactory
-
-object Configuration {
+object Settings {
   private val config = ConfigFactory.load()
 
   val dockerHost = config.getString("docker.host")
   val dockerPort = config.getInt("docker.port")
-  val containerId = config.getString("docker.container-id")
+
+  lazy val containers: Map[String, String] = {
+    val list: Iterable[ConfigObject] = config.getObjectList("docker.containers").asScala
+    (for {
+      item: ConfigObject ← list
+      entry: Entry[String, ConfigValue] ← item.entrySet().asScala
+      containerId = entry.getKey
+      containerAlias = entry.getValue.unwrapped().toString
+    } yield (containerId, containerAlias)).toMap
+  }
 }

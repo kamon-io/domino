@@ -16,15 +16,15 @@
 
 package kamon.docker.metrics
 
-import akka.event.{LoggingAdapter, NoLogging}
+import akka.event.{ LoggingAdapter, NoLogging }
 import kamon.Kamon
 import kamon.docker.stats.DockerStats.CpuStats
 import kamon.metric.instrument.InstrumentFactory
-import kamon.metric.{EntityRecorderFactory, GenericEntityRecorder}
+import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 
-class CpuMetrics (instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
+class CpuMetrics(instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
   import CpuMetrics._
-  
+
   val systemCpuUsage = DiffRecordingHistogram(histogram("system-cpu-usage"))
   val totalUsage = DiffRecordingHistogram(histogram("total-usage"))
   val usageInKernelMode = DiffRecordingHistogram(histogram("usage-in-kernel-mode"))
@@ -48,10 +48,10 @@ object CpuMetrics extends EntityRecorderFactory[CpuMetrics] {
   private var lastObservedCpuUsage = 0L
   private var lastObserverSystemCpuUsage = 0L
 
-  override def category = "docker"
+  override def category = "docker-cpu"
   override def createRecorder(instrumentFactory: InstrumentFactory): CpuMetrics = new CpuMetrics(instrumentFactory)
 
-  def apply(): (CpuStats) => Unit = Kamon.metrics.entity(CpuMetrics,"cpu").update
+  def apply(containerId: String): (CpuStats) ⇒ Unit = Kamon.metrics.entity(CpuMetrics, containerId).update
 
   def updatePercent(totalCpuUsage: Long, systemCpuUsage: Long, processors: Int) = {
     val percent = {
@@ -65,14 +65,14 @@ object CpuMetrics extends EntityRecorderFactory[CpuMetrics] {
     percent
   }
 
-  private def calculateCpuPercent(totalContainerCpu:Long, totalSystemCpu:Long, numProcessors:Int):Long = {
+  private def calculateCpuPercent(totalContainerCpu: Long, totalSystemCpu: Long, numProcessors: Int): Long = {
     // The CPU values returned by the docker api are cumulative for the life of the process, which is not what we want.
     val cpuDelta = totalContainerCpu - lastObservedCpuUsage
     val systemCpuDelta = totalSystemCpu - lastObserverSystemCpuUsage
     // based on how the "docker stats" command calculates the cpu percent
     // https://github.com/docker/docker/blob/eb79acd7a0db494d9c6d1b1e970bdabf7c44ae4e/api/client/commands.go#L2758
     if (cpuDelta > 0L && systemCpuDelta > 0L) {
-      BigDecimal(cpuDelta.toDouble / systemCpuDelta.toDouble * numProcessors * 100.0).setScale(0,BigDecimal.RoundingMode.HALF_UP).toLong
+      BigDecimal(cpuDelta.toDouble / systemCpuDelta.toDouble * numProcessors * 100.0).setScale(0, BigDecimal.RoundingMode.HALF_UP).toLong
     } else 0L
   }
 }

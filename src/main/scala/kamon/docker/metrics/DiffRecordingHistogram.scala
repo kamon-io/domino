@@ -18,10 +18,10 @@ package kamon.docker.metrics
 
 import java.util.concurrent.atomic.AtomicLong
 
-import akka.event.{LoggingAdapter, NoLogging}
+import akka.event.{ LoggingAdapter, NoLogging }
 import kamon.docker.stats.DockerStats.NetworkStats
-import kamon.metric.{EntityRecorder, EntityRecorderFactory, MetricsModule}
-import kamon.metric.instrument.{InstrumentFactory, CollectionContext, Histogram}
+import kamon.metric.{ EntityRecorder, EntityRecorderFactory, MetricsModule }
+import kamon.metric.instrument.{ InstrumentFactory, CollectionContext, Histogram }
 
 /**
  *  Wrapper Histogram for cases in which the recorded values should always be the difference

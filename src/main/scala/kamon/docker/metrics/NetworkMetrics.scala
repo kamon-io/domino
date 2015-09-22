@@ -16,10 +16,10 @@
 
 package kamon.docker.metrics
 
-import akka.event.{NoLogging, LoggingAdapter}
+import akka.event.{ NoLogging, LoggingAdapter }
 import kamon.Kamon
 import kamon.docker.stats.DockerStats.NetworkStats
-import kamon.metric.{EntityRecorderFactory, GenericEntityRecorder}
+import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 import kamon.metric.instrument._
 
 class NetworkMetrics(instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
@@ -46,8 +46,8 @@ class NetworkMetrics(instrumentFactory: InstrumentFactory) extends GenericEntity
 }
 
 object NetworkMetrics extends EntityRecorderFactory[NetworkMetrics] {
-  override def category = "docker"
+  override def category = "docker-network"
   override def createRecorder(instrumentFactory: InstrumentFactory): NetworkMetrics = new NetworkMetrics(instrumentFactory)
 
-  def apply(): (NetworkStats) => Unit = Kamon.metrics.entity(NetworkMetrics, "network").update
+  def apply(containerId: String): (NetworkStats) ⇒ Unit = Kamon.metrics.entity(NetworkMetrics, containerId).update
 }

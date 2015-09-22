@@ -16,13 +16,13 @@
 
 package kamon.docker.metrics
 
-import akka.event.{LoggingAdapter, NoLogging}
+import akka.event.{ LoggingAdapter, NoLogging }
 import kamon.Kamon
 import kamon.docker.stats.DockerStats.MemoryStats
-import kamon.metric.instrument.{Memory, InstrumentFactory}
-import kamon.metric.{EntityRecorderFactory, GenericEntityRecorder}
+import kamon.metric.instrument.{ Memory, InstrumentFactory }
+import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 
-class MemoryMetrics (instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
+class MemoryMetrics(instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
 
   val usage = histogram("usage", Memory.Bytes)
   val limit = histogram("limit", Memory.Bytes)
@@ -36,8 +36,8 @@ class MemoryMetrics (instrumentFactory: InstrumentFactory) extends GenericEntity
 }
 
 object MemoryMetrics extends EntityRecorderFactory[MemoryMetrics] {
-  override def category = "docker"
+  override def category = "docker-memory"
   override def createRecorder(instrumentFactory: InstrumentFactory): MemoryMetrics = new MemoryMetrics(instrumentFactory)
 
-  def apply(): (MemoryStats) => Unit = Kamon.metrics.entity(MemoryMetrics,"memory").update
+  def apply(containerId: String): (MemoryStats) ⇒ Unit = Kamon.metrics.entity(MemoryMetrics, containerId).update
 }

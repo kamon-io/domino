@@ -14,28 +14,15 @@
  * =========================================================================================
  */
 
-package kamon.docker.stats
+import sbt._
+import sbt.Keys._
 
-object DockerStats {
-  case class NetworkStats(`rx_bytes`: Long,
-    `rx_packets`: Long,
-    `rx_dropped`: Long,
-    `rx_errors`: Long,
-    `tx_bytes`: Long,
-    `tx_packets`: Long,
-    `tx_dropped`: Long,
-    `tx_errors`: Long)
+object Build extends Build {
+  import Dependencies._
+  import Settings._
 
-  case class MemoryStats(`max_usage`: Long,
-    `usage`: Long,
-    `failcnt`: Long,
-    `limit`: Long)
-
-  case class CpuStats(`cpu_usage`: CpuUsage,
-    `system_cpu_usage`: Long)
-
-  case class CpuUsage(`total_usage`: Long,
-    `percpu_usage`: Seq[Long],
-    `usage_in_kernelmode`: Long,
-    `usage_in_usermode`: Long)
+  lazy val dockerMonitor = Project("docker-monitor",file("."))
+    .settings(basicSettings: _*)
+    .settings(formatSettings: _*)
+    .settings(libraryDependencies ++= Seq(json4sJackson, akkaStream, akkaCore, akkaHttp, kamonCore, kamonStatsd))
 }

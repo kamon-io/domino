@@ -16,22 +16,21 @@
 
 package kamon.docker.metrics
 
-import akka.event.{ NoLogging, LoggingAdapter }
 import kamon.Kamon
 import kamon.docker.stats.DockerStats.NetworkStats
-import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 import kamon.metric.instrument._
+import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 
 class NetworkMetrics(instrumentFactory: InstrumentFactory) extends GenericEntityRecorder(instrumentFactory) {
 
-  val receivedBytes = histogram("rx-bytes", Memory.Bytes)
-  val transmittedBytes = histogram("tx-bytes", Memory.Bytes)
-  val receiveErrors = histogram("rx-errors")
-  val receivePackets = histogram("tx-packets")
-  val transmitErrors = histogram("tx-errors")
-  val receiveDrops = histogram("rx-dropped")
-  val transmitDrops = histogram("tx-dropped")
-  val transmitPackets = histogram("tx-packets")
+  val receivedBytes = DiffRecordingHistogram(histogram("rx-bytes", Memory.Bytes))
+  val transmittedBytes = DiffRecordingHistogram(histogram("tx-bytes", Memory.Bytes))
+  val receiveErrors = DiffRecordingHistogram(histogram("rx-errors"))
+  val receivePackets = DiffRecordingHistogram(histogram("tx-packets"))
+  val transmitErrors = DiffRecordingHistogram(histogram("tx-errors"))
+  val receiveDrops = DiffRecordingHistogram(histogram("rx-dropped"))
+  val transmitDrops = DiffRecordingHistogram(histogram("tx-dropped"))
+  val transmitPackets = DiffRecordingHistogram(histogram("tx-packets"))
 
   def update(networkStats: NetworkStats): Unit = {
     receivedBytes.record(networkStats.`rx_bytes`)
@@ -49,5 +48,5 @@ object NetworkMetrics extends EntityRecorderFactory[NetworkMetrics] {
   override def category = "docker-network"
   override def createRecorder(instrumentFactory: InstrumentFactory): NetworkMetrics = new NetworkMetrics(instrumentFactory)
 
-  def apply(containerId: String): (NetworkStats) ⇒ Unit = Kamon.metrics.entity(NetworkMetrics, containerId).update
+  def apply(containerAlias: String): (NetworkStats) ⇒ Unit = Kamon.metrics.entity(NetworkMetrics, containerAlias).update
 }

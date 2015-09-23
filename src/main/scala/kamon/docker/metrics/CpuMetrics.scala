@@ -16,7 +16,6 @@
 
 package kamon.docker.metrics
 
-import akka.event.{ LoggingAdapter, NoLogging }
 import kamon.Kamon
 import kamon.docker.stats.DockerStats.CpuStats
 import kamon.metric.instrument.InstrumentFactory
@@ -51,7 +50,7 @@ object CpuMetrics extends EntityRecorderFactory[CpuMetrics] {
   override def category = "docker-cpu"
   override def createRecorder(instrumentFactory: InstrumentFactory): CpuMetrics = new CpuMetrics(instrumentFactory)
 
-  def apply(containerId: String): (CpuStats) ⇒ Unit = Kamon.metrics.entity(CpuMetrics, containerId).update
+  def apply(containerAlias: String): (CpuStats) ⇒ Unit = Kamon.metrics.entity(CpuMetrics, containerAlias).update
 
   def updatePercent(totalCpuUsage: Long, systemCpuUsage: Long, processors: Int) = {
     val percent = {

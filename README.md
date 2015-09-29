@@ -1,6 +1,6 @@
-Docker-Monitor
+Docker-Monitor [![Build Status](https://travis-ci.org/kamon-io/docker-monitor.png)](https://travis-ci.org/kamon-io/docker-monitor)
 --------------
-Reports key metrics for docker containers. [![Build Status](https://travis-ci.org/kamon-io/docker-monitor.png)](https://travis-ci.org/kamon-io/docker-monitor)
+Reports key metrics for docker containers. 
 
 ###Overview
 
@@ -14,18 +14,12 @@ Reports key performance metrics for docker containers, including:
 * Disk Activity (coming soon)
 * Container Events (coming soon)
 
-### Build
+### Setup
 
 Clone the repo:
 
 ```
   git clone https://github.com/kamon-io/docker-monitor.git
-```
-
-Run the assembly task:
-
-```
-  sbt assembly
 ```
 
 ###Configuration
@@ -45,6 +39,13 @@ docker {
   containers = [{"container-1":"awesome-container-1"}]
 }
 
+```
+### Build
+
+Run the assembly task:
+
+```
+  sbt assembly
 ```
 
 ### Run
@@ -73,7 +74,7 @@ To start a container with this image you just need to run the following command:
 docker run -d -p 80:80 -p 8125:8125/udp -p 8126:8126 --name kamon-grafana-dashboard kamon/grafana_graphite
 ```
 
-![Docker Dashboard](http://kamon.io/assets/img/docker-dashboard.png)
+![Docker Dashboard](https://raw.githubusercontent.com/kamon-io/kamon.io/master/assets/img/docker-dashboard.png)
 
 ###Future work
 

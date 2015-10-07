@@ -14,7 +14,7 @@
  * =========================================================================================
  */
 
-package kamon.docker.stats
+package kamon.domino.stats
 
 object DockerStats {
   case class NetworkStats(`rx_bytes`: Long,

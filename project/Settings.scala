@@ -25,6 +25,7 @@ object Settings {
   lazy val basicSettings: Seq[Setting[_]] = Seq(
     ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
     resolvers ++= Dependencies.resolutionRepos,
+    scalaVersion := "2.11.7",
     version <<= version in ThisBuild,
     scalacOptions  := Seq(
       "-encoding",

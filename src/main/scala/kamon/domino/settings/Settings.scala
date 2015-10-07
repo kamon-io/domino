@@ -13,7 +13,7 @@
  * =========================================================================================
  */
 
-package kamon.docker.settings
+package kamon.domino.settings
 
 import java.util.Map.Entry
 import com.typesafe.config.{ ConfigFactory, ConfigObject, ConfigValue }

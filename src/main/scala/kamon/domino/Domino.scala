@@ -14,7 +14,7 @@
  * =========================================================================================
  */
 
-package kamon.docker
+package kamon.domino
 
 import akka.actor.ActorSystem
 import akka.event.Logging
@@ -22,15 +22,15 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ HttpRequest, HttpResponse, StatusCodes }
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
-import kamon.docker.metrics.{ CpuMetrics, MemoryMetrics, NetworkMetrics }
-import kamon.docker.stats.DockerStats._
+import kamon.domino.metrics.{ CpuMetrics, MemoryMetrics, NetworkMetrics }
+import kamon.domino.stats.DockerStats._
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 
-object DockerMonitor extends App with KamonSupport {
+object Domino extends App with KamonSupport {
 
   import settings.Settings._
 

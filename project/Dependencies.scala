@@ -22,7 +22,7 @@ object Dependencies {
   )
 
   val StreamsVersion  = "1.0"
-  val KamonVersion    = "0.5.1"
+  val KamonVersion    = "0.5.2"
 
   val json4sJackson   = "org.json4s"          %% "json4s-jackson"               % "3.2.11"
   val akkaStream      = "com.typesafe.akka"   %% "akka-stream-experimental"     % StreamsVersion

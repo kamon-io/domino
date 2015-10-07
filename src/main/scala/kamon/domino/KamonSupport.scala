@@ -14,7 +14,7 @@
  * =========================================================================================
  */
 
-package kamon.docker
+package kamon.domino
 
 import kamon.Kamon
 

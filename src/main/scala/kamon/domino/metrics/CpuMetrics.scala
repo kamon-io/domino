@@ -14,10 +14,10 @@
  * =========================================================================================
  */
 
-package kamon.docker.metrics
+package kamon.domino.metrics
 
 import kamon.Kamon
-import kamon.docker.stats.DockerStats.CpuStats
+import kamon.domino.stats.DockerStats.CpuStats
 import kamon.metric.instrument.InstrumentFactory
 import kamon.metric.{ EntityRecorderFactory, GenericEntityRecorder }
 

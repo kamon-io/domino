@@ -21,7 +21,7 @@ object Build extends Build {
   import Dependencies._
   import Settings._
 
-  lazy val dockerMonitor = Project("docker-monitor",file("."))
+  lazy val dockerMonitor = Project("domino",file("."))
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
     .settings(libraryDependencies ++= Seq(json4sJackson, akkaStream, akkaCore, akkaHttp, kamonCore, kamonStatsd))

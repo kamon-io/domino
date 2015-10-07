@@ -14,12 +14,12 @@
  * =========================================================================================
  */
 
-package kamon.docker.metrics
+package kamon.domino.metrics
 
 import java.util.concurrent.atomic.AtomicLong
 
 import akka.event.{ LoggingAdapter, NoLogging }
-import kamon.docker.stats.DockerStats.NetworkStats
+import kamon.domino.stats.DockerStats.NetworkStats
 import kamon.metric.{ EntityRecorder, EntityRecorderFactory, MetricsModule }
 import kamon.metric.instrument.{ InstrumentFactory, CollectionContext, Histogram }
 

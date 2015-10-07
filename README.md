@@ -1,4 +1,4 @@
-Docker-Monitor [![Build Status](https://travis-ci.org/kamon-io/docker-monitor.png)](https://travis-ci.org/kamon-io/docker-monitor)
+Domino [![Build Status](https://travis-ci.org/kamon-io/domino.png)](https://travis-ci.org/kamon-io/domino)
 --------------
 Reports key metrics for docker containers. 
 
@@ -52,16 +52,16 @@ Run the assembly task:
 To run the default:
 
 ```scala
-  java -jar docker-monitor.jar
+  java -jar domino.jar
 ```
 
 ###Overriding configuration file
 
 System properties can be used to force a different config source:
 
-* **config.resource**: ```java -jar docker-monitor.jar -Dconfig.resource=whatever.conf```
-* **config.file**: ```java -jar docker-monitor.jar -Dconfig.file=conf/environments/dev/other.conf```
-* **config.url**:```java -jar docker-monitor.jar -Dconfig.url=http://site.com/my/awesome/configuration.conf```
+* **config.resource**: ```java -jar domino.jar -Dconfig.resource=whatever.conf```
+* **config.file**: ```java -jar domino.jar -Dconfig.file=conf/environments/dev/other.conf```
+* **config.url**:```java -jar domino.jar -Dconfig.url=http://site.com/my/awesome/configuration.conf```
 
 These system properties specify a replacement for `application.conf`, not an addition.
 

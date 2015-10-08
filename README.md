@@ -65,6 +65,13 @@ System properties can be used to force a different config source:
 
 These system properties specify a replacement for `application.conf`, not an addition.
 
+### For the impatient
+just download the [release jar] and run the following:
+
+```scala
+  java -jar domino.jar -Dconfig.resource=whatever.conf
+```
+
 ### Visualization
 By default the application is configured for use with [StatsD] through `Kamon`. For this reason, the only thing what we need is our [Docker-Grafana-Graphite] image that have a built-in Docker dashboard.
 
@@ -86,3 +93,4 @@ Possible future work for this tool includes:
 
 [StatsD]: http://kamon.io/backends/statsd/
 [Docker-Grafana-Graphite]:https://github.com/kamon-io/docker-grafana-graphite
+[release jar]:https://github.com/kamon-io/domino/releases

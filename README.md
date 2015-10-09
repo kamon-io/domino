@@ -87,7 +87,7 @@ docker run -d -p 80:80 -p 8125:8125/udp -p 8126:8126 --name kamon-grafana-dashbo
 
 Possible future work for this tool includes:
 
-* Include `Disk Utilization` metric
+* Include `Disk Utilization` metrics
 * Monitoring of `Docker Events`
 * Docker package
 
